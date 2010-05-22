@@ -19,4 +19,8 @@
       (get-subdirs-of-dir "~/local/emacs"))
 
 ;;;; require my brand of emacs customizations
-(require 'currys-customizations)
+(require 'currys-theme)
+(require 'currys-misc)
+(require 'currys-erlang)
+(require 'currys-javascript)
+(require 'currys-lisp)
