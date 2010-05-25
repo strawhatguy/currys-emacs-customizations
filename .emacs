@@ -1,3 +1,5 @@
+;;;; -*- Emacs-Lisp -*-
+
 ;;;; Hmm... never needed the cl package before...
 (require 'cl)
 
@@ -16,7 +18,7 @@
 ;;;; Add a new paths to load emacs stuff
 (mapc (lambda (path)
 	(add-to-list 'load-path path))
-      (get-subdirs-of-dir "~/local/emacs"))
+      (get-subdirs-of-dir "REPLACEME"))
 
 ;;;; require my brand of emacs customizations
 (require 'currys-theme)

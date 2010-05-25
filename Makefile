@@ -1,11 +1,19 @@
 
+PWD:=$(shell pwd)
+
 all: slime-update
 
-install: slime-update
-	/usr/bin/install -m 644 --backup=numbered .emacs ~/.emacs
+install: slime-update .emacs-installable
+	/usr/bin/install -m 644 --backup=numbered .emacs-installable ~/.emacs
+
+.emacs-installable: .emacs
+	sed -e 's,REPLACEME,$(PWD),g' $< > $@
 
 slime-update: slime
 	cd slime; git pull; cd -;
 
 slime:
 	git clone git://git.boinkor.net/slime.git
+
+clean:
+	rm -f *~ .emacs-installable
