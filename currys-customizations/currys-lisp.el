@@ -24,12 +24,15 @@
     (let ((oldbuf (current-buffer))
           (asd  (concat name ".asd"))
           (file (concat name ".lisp"))
-          (tests (concat name "-tests.lisp"))
+          (test (concat name "-test.lisp"))
+          (test-asd (concat name "-test.asd"))
           (pack "package.lisp"))
+      (when (file-exists-p test-asd) (error "File %s already exists!" test-asd))
       (when (file-exists-p asd)  (error "File %s already exists!" asd))
+      (when (file-exists-p test) (error "File %s already exists!" test))
       (when (file-exists-p file) (error "File %s already exists!" file))
-      (when (file-exists-p tests) (error "File %s already exists!" tests))
       (when (file-exists-p pack) (error "File %s already exists!" pack))
+
       (find-file asd)
       (goto-char 0)
       (insert ";;;; -*-Lisp-*- " asd "\n")
@@ -43,17 +46,28 @@
               "  :components \n"
 	      "   ((:file \"" (file-name-sans-extension pack) "\")\n"
 	      "    (:file \"" (file-name-sans-extension file) "\")))\n\n")
-      (insert "(asdf:defsystem :" name "-tests\n"
+      (lisp-mode)
+      (font-lock-mode)
+      (save-buffer (current-buffer))
+
+      (find-file test-asd)
+      (goto-char 0)
+      (insert ";;;; -*-Lisp-*- " test-asd "\n")
+      (insert "(in-package :cl-user)\n\n")
+      (insert "(defpackage :" name "-test-system (:use :cl))\n")
+      (insert "(in-package :" name "-test-system)\n\n")
+      (insert "(asdf:defsystem :" name "-test\n"
               "  :serial t\n"
 	      "  ;; external dependencies go here\n"
               "  :depends-on (:alexandria\n"
 	      "               :sb-rt\n"
 	      "               :" name ")\n"
               "  :components \n"
-	      "   ((:file \"" (file-name-sans-extension tests) "\")))\n")
+	      "   ((:file \"" (file-name-sans-extension test) "\")))\n")
       (lisp-mode)
       (font-lock-mode)
       (save-buffer (current-buffer))
+
       (find-file pack)
       (goto-char 0)
       (insert ";;;; " pack "\n\n")
@@ -64,18 +78,20 @@
       (insert "  ;; export symbols here\n")
       (insert "  (:export    ))\n\n")
       (save-buffer (current-buffer))
+
       (find-file file)
       (goto-char 0)
       (insert ";;;; " file "\n\n")
       (insert "(in-package :" name ")\n\n")
       (save-buffer (current-buffer))
-      (find-file tests)
+
+      (find-file test)
       (goto-char 0)
-      (insert ";;;; " tests "\n\n")
+      (insert ";;;; " test "\n\n")
       (insert "(require :sb-rt)\n")
-      (insert "(defpackage :" name "-tests\n")
+      (insert "(defpackage :" name "-test\n")
       (insert "  (:use :cl :alexandria :sb-rt :" name "))\n\n")
-      (insert "(in-package :" name "-tests)\n\n")
+      (insert "(in-package :" name "-test)\n\n")
       (save-buffer (current-buffer)))))
 
 (provide 'currys-lisp)
