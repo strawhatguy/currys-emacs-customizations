@@ -40,4 +40,7 @@
 ;;;; Have ediff buffers show in a side-by-side view
 (setq ediff-split-window-function 'split-window-horizontally)
 
+;;;; smart-tab
+(require 'smart-tab)
+
 (provide 'currys-theme)

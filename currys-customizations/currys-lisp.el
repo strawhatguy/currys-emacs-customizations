@@ -12,6 +12,14 @@
 (setq inferior-lisp-program "sbcl")
 (add-to-list 'slime-lisp-implementations
 	     '(sbcl ("sbcl") :coding-system utf-8-unix))
+;;;; Add per lisp hooks to turn on smart-tab-mode
+(add-to-list 'smart-tab-completion-functions-alist 
+	     '(lisp-mode . slime-complete-symbol))
+(add-to-list 'smart-tab-completion-functions-alist 
+	     '(common-lisp-mode . slime-complete-symbol))
+(add-hook 'emacs-lisp-mode-hook (lambda () (smart-tab-mode-on))) 
+(add-hook 'lisp-mode-hook (lambda () (smart-tab-mode-on))) 
+(add-hook 'common-lisp-mode-hook (lambda () (smart-tab-mode-on))) 
 
 ;;;; CL helpers
 ;;;; Makes a new lisp package, see doc string
