@@ -43,7 +43,7 @@
 
       (find-file asd)
       (goto-char 0)
-      (insert ";;;; -*-Lisp-*- " asd "\n")
+      (insert ";;;; -*-Lisp-*- \n")
       (insert "(in-package :cl-user)\n\n")
       (insert "(defpackage :" name "-system (:use :cl))\n")
       (insert "(in-package :" name "-system)\n\n")
@@ -60,7 +60,7 @@
 
       (find-file test-asd)
       (goto-char 0)
-      (insert ";;;; -*-Lisp-*- " test-asd "\n")
+      (insert ";;;; -*-Lisp-*- \n")
       (insert "(in-package :cl-user)\n\n")
       (insert "(defpackage :" name "-test-system (:use :cl))\n")
       (insert "(in-package :" name "-test-system)\n\n")
@@ -78,7 +78,7 @@
 
       (find-file pack)
       (goto-char 0)
-      (insert ";;;; " pack "\n\n")
+      (insert ";;;; -*-Lisp-*-\n")
       (insert "(in-package :common-lisp-user)\n\n")
       (insert "(defpackage :" name "\n")
       (insert "  ;; insert other packages below\n")
@@ -89,17 +89,17 @@
 
       (find-file file)
       (goto-char 0)
-      (insert ";;;; " file "\n\n")
+      (insert ";;;; -*-Lisp-*-\n")
       (insert "(in-package :" name ")\n\n")
       (save-buffer (current-buffer))
 
       (find-file test)
       (goto-char 0)
-      (insert ";;;; " test "\n\n")
+      (insert ";;;; -*-Lisp-*-\n")
       (insert "(require :sb-rt)\n")
       (insert "(defpackage :" name "-test\n")
       (insert "  (:use :cl :alexandria :sb-rt :" name "))\n\n")
       (insert "(in-package :" name "-test)\n\n")
       (save-buffer (current-buffer)))))
-
+  
 (provide 'currys-lisp)
