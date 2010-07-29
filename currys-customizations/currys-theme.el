@@ -9,9 +9,8 @@
 (column-number-mode 1)
 
 ;;;; Set to a usable font
-(set-default-font "Liberation Mono-12")
-;; (set-default-font "-*-liberation.mono-bold-r-*-*-17-*-*-*-*-*-*-*")
-;; (set-default-font "-*-liberation.mono-bold-r-*-*-17-*-*-*-*-*-*-*")
+(add-to-list 'default-frame-alist '(font-backend . "xft"))
+(add-to-list 'default-frame-alist '(font . "Liberation Mono-12"))
 
 ;;;; Stop making backup files
 (setq make-backup-files nil)

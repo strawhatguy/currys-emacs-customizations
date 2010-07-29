@@ -26,6 +26,3 @@
 (require 'currys-erlang)
 (require 'currys-javascript)
 (require 'currys-lisp)
-
-;;;; Start an emacs server
-(server-start)
