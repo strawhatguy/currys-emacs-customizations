@@ -43,4 +43,8 @@
 ;;;; smart-tab
 (require 'smart-tab)
 
+;;;; Set browser to chrome
+(setq browse-url-generic-program (executable-find "google-chrome")
+      browse-url-browser-function 'browse-url-generic)
+
 (provide 'currys-theme)
