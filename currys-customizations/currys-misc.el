@@ -41,6 +41,9 @@ The output appears in the buffer `*Async Shell Command*'."
 ;;;; SVN mode
 (require 'psvn)
 
+;;;; Man-mode makes manpage active buffer
+(setq Man-notify-method 'aggressive)
+
 ;;;; Buffer menu mode sort function
 (defun buffer-list-sort (column)
   (interactive "SColumn to sort by (one of name,size,mode,file,time [default=time]): ")
