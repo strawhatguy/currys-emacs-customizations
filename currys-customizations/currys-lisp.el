@@ -2,6 +2,15 @@
 ;;;; set the scheme program to use
 (setq scheme-program-name "mzscheme")
 
+;; clojure-mode
+(require 'clojure-mode)
+
+(defun run-clojure ()
+  (interactive)
+  (async-shell-command "cd ~/local/emacs/swank-clojure; lein swank 4010 localhost")
+  (sleep-for 10)
+  (slime-connect "127.0.0.1" "4010"))
+
 ;;;; Load and setup slime
 (require 'slime)
 (slime-setup '(slime-repl))
@@ -32,7 +41,7 @@
     (let ((oldbuf (current-buffer))
           (asd  (concat name ".asd"))
           (file (concat name ".lisp"))
-          (test (concat name "-test.lisp"))
+          (test "test.lisp")
           (test-asd (concat name "-test.asd"))
           (pack "package.lisp"))
       (when (file-exists-p test-asd) (error "File %s already exists!" test-asd))
