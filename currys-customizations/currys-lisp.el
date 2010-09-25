@@ -14,6 +14,7 @@
 ;;;; Load and setup slime
 (require 'slime)
 (slime-setup '(slime-repl))
+(setq slime-net-coding-system 'utf-8-unix)
 ;;;; Add ecl to slime (but doesn't seem to work right now)
 (add-to-list 'slime-lisp-implementations
 	     '(ecl ("ecl")))
