@@ -39,77 +39,69 @@
    and system definition"
   (interactive "sName of package: ")
   (when (stringp name)
-    (let ((oldbuf (current-buffer))
-          (asd  (concat name ".asd"))
-          (file (concat name ".lisp"))
-          (test "test.lisp")
-          (test-asd (concat name "-test.asd"))
-          (pack "package.lisp"))
-      (when (file-exists-p test-asd) (error "File %s already exists!" test-asd))
-      (when (file-exists-p asd)  (error "File %s already exists!" asd))
-      (when (file-exists-p test) (error "File %s already exists!" test))
-      (when (file-exists-p file) (error "File %s already exists!" file))
-      (when (file-exists-p pack) (error "File %s already exists!" pack))
-
-      (find-file asd)
-      (goto-char 0)
-      (insert ";;;; -*-Lisp-*- \n")
-      (insert "(in-package :cl-user)\n\n")
-      (insert "(defpackage :" name "-system (:use :cl))\n")
-      (insert "(in-package :" name "-system)\n\n")
-      (insert "(asdf:defsystem :" name "\n"
-              "  :serial t\n"
-	      "  ;; external dependencies go here\n"
-              "  :depends-on (:alexandria)\n"
-              "  :components \n"
-	      "   ((:file \"" (file-name-sans-extension pack) "\")\n"
-	      "    (:file \"" (file-name-sans-extension file) "\")))\n\n")
-      (lisp-mode)
-      (font-lock-mode)
-      (save-buffer (current-buffer))
-
-      (find-file test-asd)
-      (goto-char 0)
-      (insert ";;;; -*-Lisp-*- \n")
-      (insert "(in-package :cl-user)\n\n")
-      (insert "(defpackage :" name "-test-system (:use :cl))\n")
-      (insert "(in-package :" name "-test-system)\n\n")
-      (insert "(asdf:defsystem :" name "-test\n"
-              "  :serial t\n"
-	      "  ;; external dependencies go here\n"
-              "  :depends-on (:alexandria\n"
-	      "               :sb-rt\n"
-	      "               :" name ")\n"
-              "  :components \n"
-	      "   ((:file \"" (file-name-sans-extension test) "\")))\n")
-      (lisp-mode)
-      (font-lock-mode)
-      (save-buffer (current-buffer))
-
-      (find-file pack)
-      (goto-char 0)
-      (insert ";;;; -*-Lisp-*-\n")
-      (insert "(in-package :common-lisp-user)\n\n")
-      (insert "(defpackage :" name "\n")
-      (insert "  ;; insert other packages below\n")
-      (insert "  (:use :cl :alexandria)\n")
-      (insert "  ;; export symbols here\n")
-      (insert "  (:export    ))\n\n")
-      (save-buffer (current-buffer))
-
-      (find-file file)
-      (goto-char 0)
-      (insert ";;;; -*-Lisp-*-\n")
-      (insert "(in-package :" name ")\n\n")
-      (save-buffer (current-buffer))
-
-      (find-file test)
-      (goto-char 0)
-      (insert ";;;; -*-Lisp-*-\n")
-      (insert "(require :sb-rt)\n")
-      (insert "(defpackage :" name "-test\n")
-      (insert "  (:use :cl :alexandria :sb-rt :" name "))\n\n")
-      (insert "(in-package :" name "-test)\n\n")
-      (save-buffer (current-buffer)))))
+    (flet ((basename (filename &optional (sep "/"))
+	     (let ((name (copy-sequence filename)))
+	       (do ((index (string-match sep name) (string-match sep name)))
+		   ((null index) name)
+		 (setq name (subseq name (1+ index))))))
+	   (bail-on-file-existance (file)
+	     (when (file-exists-p file)
+	       (error "File %s already exists!" file))
+	     file)
+	   (make-asd-file (filename name dir first-file &rest files)
+             (save-current-buffer
+	       (find-file filename)
+	       (insert ";;;; -*-Lisp-*- \n")
+	       (insert "(in-package :cl-user)\n\n")
+	       (insert "(defpackage :" name "-system (:use :cl))\n")
+	       (insert "(in-package :" name "-system)\n\n")
+	       (insert "(asdf:defsystem :" name "\n"
+		       "  ;; external dependencies go here\n"
+		       "  :depends-on (:alexandria)\n"
+		       "  :components \n"
+		       "   ((:module \"" dir "\" \n"
+		       "             :serial t\n"
+		       "             :components \n")
+	       (insert "              ((:file \"" (file-name-sans-extension first-file) "\")")
+	       (dolist (file files)
+		 (insert "\n               (:file \"" (file-name-sans-extension file) "\")"))
+	       (insert "))))\n\n")
+	       (lisp-mode)
+	       (font-lock-mode)
+	       (save-buffer (current-buffer))))
+	   (make-lisp-package-file (filename name)
+	     (save-current-buffer
+	       (find-file filename)
+	       (insert ";;;; -*-Lisp-*-\n")
+	       (insert "(in-package :common-lisp-user)\n\n")
+	       (insert "(defpackage :" name "\n")
+	       (insert "  ;; insert other packages below\n")
+	       (insert "  (:use :cl :alexandria)\n")
+	       (insert "  ;; export symbols here\n")
+	       (insert "  (:export    ))\n\n")
+	       (save-buffer (current-buffer))))
+	   (make-lisp-file (filename name)
+             (save-current-buffer
+	       (find-file filename)
+	       (insert ";;;; -*-Lisp-*-\n")
+	       (insert "(in-package :" name ")\n\n")
+	       (save-buffer (current-buffer)))))
+      
+      (mkdir "src" t)
+      (mkdir "test" t)
+      (let ((oldbuf (current-buffer))
+	    (test-name (concat name "-test"))
+	    (test-asd (bail-on-file-existance (concat name "-test.asd")))
+	    (asd  (bail-on-file-existance (concat name ".asd")))
+	    (pack (bail-on-file-existance (concat "src/"  "package.lisp")))
+	    (tpack (bail-on-file-existance (concat "test/"  "package.lisp")))
+	    (file (bail-on-file-existance (concat "src/" name ".lisp")))
+	    (test (bail-on-file-existance (concat "test/" name ".lisp"))))
+	(make-asd-file asd name "src" (basename pack) (basename file))
+	(make-asd-file test-asd test-name "test" (basename tpack) (basename test))
+	(make-lisp-package-file pack name)
+	(make-lisp-package-file tpack test-name)
+	(make-lisp-file file name)
+	(make-lisp-file test test-name)))))
   
 (provide 'currys-lisp)
