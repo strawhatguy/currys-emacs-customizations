@@ -39,12 +39,10 @@
 ;;;; Have ediff buffers show in a side-by-side view
 (setq ediff-split-window-function 'split-window-horizontally)
 
-;;;; smart-tab
-(require 'smart-tab)
-
 ;;;; Set browser to chrome
-(when-let (chrome-path (executable-find "google-chrome"))
-  (setq browse-url-generic-program chrome-path
-	browse-url-browser-function 'browse-url-generic))
+(let (chrome-path (executable-find "google-chrome"))
+  (when chrome-path
+    (setq browse-url-generic-program chrome-path
+	  browse-url-browser-function 'browse-url-generic)))
 
 (provide 'currys-theme)

@@ -43,6 +43,8 @@ The output appears in the buffer `*Async Shell Command*'."
 
 ;;;; Man-mode makes manpage active buffer
 (setq Man-notify-method 'aggressive)
+;;;; Compilation mode goes to first error
+(setq compilation-auto-jump-to-first-error t)
 
 ;;;; Buffer menu mode sort function
 (defun buffer-list-sort (column)
@@ -78,5 +80,13 @@ The output appears in the buffer `*Async Shell Command*'."
   (shell-command "rm /tmp/tmp.ps")
   (message (concat "Saved to:  " (buffer-name) ".pdf")))
 
+;;;; smart-tab
+(require 'smart-tab)
+
+;;;; auto-complete-mode
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories 
+	     (expand-file-name "~/local/emacs/ac-dict"))
+(ac-config-default)
 
 (provide 'currys-misc)

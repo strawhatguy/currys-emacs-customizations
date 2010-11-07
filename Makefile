@@ -1,9 +1,11 @@
 
 PWD:=$(shell pwd)
 
-all: slime-update
+.PHONY: all install clean
 
-install: slime-update .emacs-installable
+all: install
+
+install: .emacs-installable
 	/usr/bin/install -m 644 --backup=numbered .emacs-installable ~/.emacs
 
 .emacs-installable: .emacs
