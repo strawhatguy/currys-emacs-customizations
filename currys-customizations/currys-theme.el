@@ -40,7 +40,7 @@
 (setq ediff-split-window-function 'split-window-horizontally)
 
 ;;;; Set browser to chrome
-(let (chrome-path (executable-find "google-chrome"))
+(let ((chrome-path (executable-find "google-chrome")))
   (when chrome-path
     (setq browse-url-generic-program chrome-path
 	  browse-url-browser-function 'browse-url-generic)))
