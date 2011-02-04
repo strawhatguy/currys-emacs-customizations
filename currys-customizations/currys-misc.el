@@ -46,6 +46,9 @@ The output appears in the buffer `*Async Shell Command*'."
 ;;;; Compilation mode goes to first error
 (setq compilation-auto-jump-to-first-error t)
 
+;;;; Shut off a really annoying new dialog box
+(setq use-file-dialog nil)
+
 ;;;; Buffer menu mode sort function
 (defun buffer-list-sort (column)
   (interactive "SColumn to sort by (one of name,size,mode,file,time [default=time]): ")
