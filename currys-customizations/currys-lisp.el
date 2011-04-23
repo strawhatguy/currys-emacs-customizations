@@ -1,14 +1,11 @@
-;;;; Load and setup slime
-(require 'slime)
-(slime-setup '(slime-fancy))
+;; ;;;; Load and setup slime
+(load (expand-file-name "~/.quicklisp/slime-helper.el"))
+
 (setq slime-net-coding-system 'utf-8-unix)
-;;;; Add ecl to slime (but doesn't seem to work right now)
-(add-to-list 'slime-lisp-implementations
-	     '(ecl ("ecl")))
-;;;; Add sbcl to slime (last, so it's the default)
-(setq inferior-lisp-program "sbcl")
-(add-to-list 'slime-lisp-implementations
-	     '(sbcl ("sbcl") :coding-system utf-8-unix))
+(setq slime-lisp-implementations
+      '((sbcl ("/usr/local/bin/sbcl") :coding-system utf-8-unix)
+	(ecl ("ecl"))))
+
 ;;;; Add per lisp hooks to turn on smart-tab-mode
 (add-to-list 'smart-tab-completion-functions-alist 
 	     '(lisp-mode . slime-complete-symbol))

@@ -11,11 +11,5 @@ install: .emacs-installable
 .emacs-installable: .emacs
 	sed -e 's,REPLACEME,$(PWD),g' $< > $@
 
-slime-update: slime
-	cd slime; git pull; cd -;
-
-slime:
-	git clone git://git.boinkor.net/slime.git
-
 clean:
 	rm -f *~ .emacs-installable
