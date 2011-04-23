@@ -89,7 +89,7 @@ The output appears in the buffer `*Async Shell Command*'."
 ;;;; auto-complete-mode
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories 
-	     (expand-file-name "~/local/emacs/ac-dict"))
+	     (expand-file-name "~/.ac-dict"))
 (ac-config-default)
 
 (provide 'currys-misc)
