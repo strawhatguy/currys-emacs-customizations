@@ -21,6 +21,9 @@
 ;;;; Make meta g to goto-line
 (global-set-key [(meta g)] 'goto-line)
 
+;;;; set F5 key to revert-buffer
+(global-set-key [f5] '(lambda () (interactive) (revert-buffer nil t nil)))
+
 ;;;; Allow terminal colorization
 (ansi-color-for-comint-mode-on)
 

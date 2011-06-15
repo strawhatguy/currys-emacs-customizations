@@ -41,7 +41,7 @@
 	       (insert "(in-package :" name "-system)\n\n")
 	       (insert "(asdf:defsystem :" name "\n"
 		       "  ;; external dependencies go here\n"
-		       "  :depends-on (:alexandria)\n"
+		       "  :depends-on ()\n"
 		       "  :components \n"
 		       "   ((:module \"" dir "\" \n"
 		       "             :serial t\n"
@@ -60,7 +60,7 @@
 	       (insert "(in-package :common-lisp-user)\n\n")
 	       (insert "(defpackage :" name "\n")
 	       (insert "  ;; insert other packages below\n")
-	       (insert "  (:use :cl :alexandria)\n")
+	       (insert "  (:use :cl)\n")
 	       (insert "  ;; export symbols here\n")
 	       (insert "  (:export    ))\n\n")
 	       (save-buffer (current-buffer))))
@@ -78,9 +78,9 @@
 	    (test-asd (bail-on-file-existance (concat name "-test.asd")))
 	    (asd  (bail-on-file-existance (concat name ".asd")))
 	    (pack (bail-on-file-existance (concat "src/"  "package.lisp")))
-	    (tpack (bail-on-file-existance (concat "test/"  "package-test.lisp")))
+	    (tpack (bail-on-file-existance (concat "test/"  "package.lisp")))
 	    (file (bail-on-file-existance (concat "src/" name ".lisp")))
-	    (test (bail-on-file-existance (concat "test/" name "-test.lisp"))))
+	    (test (bail-on-file-existance (concat "test/" name ".lisp"))))
 	(make-asd-file asd name "src" (basename pack) (basename file))
 	(make-asd-file test-asd test-name "test" (basename tpack) (basename test))
 	(make-lisp-package-file pack name)
