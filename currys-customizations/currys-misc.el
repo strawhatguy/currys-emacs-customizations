@@ -92,4 +92,10 @@ The output appears in the buffer `*Async Shell Command*'."
 	     (expand-file-name "~/.ac-dict"))
 (ac-config-default)
 
+;;;; edit-server
+(if (and (daemonp) (locate-library "edit-server"))
+    (progn
+      (require 'edit-server)
+      (edit-server-start)))
+
 (provide 'currys-misc)
