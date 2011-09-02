@@ -43,8 +43,8 @@ The output appears in the buffer `*Async Shell Command*'."
 
 ;;;; Man-mode makes manpage active buffer
 (setq Man-notify-method 'aggressive)
-;;;; Compilation mode goes to first error
-(setq compilation-auto-jump-to-first-error t)
+;;;; Compilation mode scrolls to first error
+(setq compilation-scroll-output 'first-error)
 
 ;;;; Shut off a really annoying new dialog box
 (setq use-file-dialog nil)
