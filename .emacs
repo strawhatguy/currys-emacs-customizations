@@ -17,6 +17,7 @@
 
 ;;;; Add a new paths to load emacs stuff
 (mapc (lambda (path)
+	(byte-recompile-directory path 0)
 	(add-to-list 'load-path path))
       (get-subdirs-of-dir "REPLACEME"))
 

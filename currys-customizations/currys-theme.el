@@ -29,7 +29,7 @@
 
 ;;;; Change color scheme to Zenburn default
 (require 'color-theme)
-(require 'zenburn)
+(require 'color-theme-zenburn)
 (color-theme-zenburn)
 
 ;;;; Highlight entire expression within parens
