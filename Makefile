@@ -9,7 +9,7 @@ install: .emacs-installable
 	/usr/bin/install -m 644 --backup=numbered .emacs-installable ~/.emacs
 
 compile:
-	/usr/bin/emacs --batch -f batch-byte-recompile-directory . 0
+	/usr/bin/emacs --batch --eval '(byte-recompile-directory "." 0)'
 
 .emacs-installable: .emacs
 	sed -e 's,REPLACEME,$(PWD),g' $< > $@
