@@ -11,8 +11,8 @@ The output appears in the buffer `*Async Shell Command*'."
     (interactive
      (list
       (read-shell-command "Async shell command: " nil nil
-			  (and buffer-file-name
-			       (file-relative-name buffer-file-name)))
+                          (and buffer-file-name
+                               (file-relative-name buffer-file-name)))
       current-prefix-arg
       shell-command-default-error-buffer))
     (unless (string-match "&[ \t]*\\'" command)
@@ -45,7 +45,8 @@ The output appears in the buffer `*Async Shell Command*'."
 (setq Man-notify-method 'aggressive)
 ;;;; Compilation mode scrolls to first error
 (setq compilation-scroll-output 'first-error)
-
+;;;; Turn off tabs
+(setq-default indent-tabs-mode nil)
 ;;;; Shut off a really annoying new dialog box
 (setq use-file-dialog nil)
 
@@ -59,17 +60,17 @@ The output appears in the buffer `*Async Shell Command*'."
     (file (Buffer-menu-sort 5))
     (t    (Buffer-menu-sort nil))))
 (add-hook 'Buffer-menu-mode-hook
-	  (lambda ()
-	    (define-key Buffer-menu-mode-map (kbd "S") 'buffer-list-sort)))
+          (lambda ()
+            (define-key Buffer-menu-mode-map (kbd "S") 'buffer-list-sort)))
 
 ;;;; For work, punch an e3 user proxy hole through a stack's fw
 (defun setup-stack-tramp-proxies (stack)
   (interactive "sHostname of stack, NO FQDN (example: clay): ")
   (setq tramp-default-proxies-alist nil)
   (add-to-list 'tramp-default-proxies-alist
-	       (list "\\.example\\.com"
-		     nil 
-		     (concat "/ssh:" stack ".skarven.net:"))))
+               (list "\\.example\\.com"
+                     nil 
+                     (concat "/ssh:" stack ".skarven.net:"))))
 
 ;;;; pretty-print to a pdf file, with colorization of code
 (defun print-to-pdf ()
@@ -89,7 +90,7 @@ The output appears in the buffer `*Async Shell Command*'."
 ;;;; auto-complete-mode
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories 
-	     (expand-file-name "~/.ac-dict"))
+             (expand-file-name "~/.ac-dict"))
 (ac-config-default)
 
 ;;;; edit-server

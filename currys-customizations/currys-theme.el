@@ -46,6 +46,6 @@
 (let ((chrome-path (executable-find "google-chrome")))
   (when chrome-path
     (setq browse-url-generic-program chrome-path
-	  browse-url-browser-function 'browse-url-generic)))
+          browse-url-browser-function 'browse-url-generic)))
 
 (provide 'currys-theme)
