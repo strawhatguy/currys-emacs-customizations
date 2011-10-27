@@ -42,10 +42,12 @@
 ;;;; Have ediff buffers show in a side-by-side view
 (setq ediff-split-window-function 'split-window-horizontally)
 
-;;;; Set browser to chrome
-(let ((chrome-path (executable-find "google-chrome")))
-  (when chrome-path
-    (setq browse-url-generic-program chrome-path
-          browse-url-browser-function 'browse-url-generic)))
+;;;; Set browser
+(dolist (executable (list "google-chrome" "chromium-browser" "firefox"))
+  (let ((browser-path (executable-find executable)))
+    (when browser-path
+      (setq browse-url-generic-program browser-path
+            browse-url-browser-function 'browse-url-generic)
+      (return browser-path))))
 
 (provide 'currys-theme)
