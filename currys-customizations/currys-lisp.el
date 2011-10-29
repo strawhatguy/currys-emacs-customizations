@@ -18,9 +18,12 @@
 ;;;; CL helpers
 ;;;; Makes a new lisp package, see doc string
 (defun new-lisp-package (name)
-  "Make three files, <name>.lisp, package.lisp, and <name>.asd,
+  "Make six files:
+   <name>.asd,       <name>-test.asd, 
+   src/<name>.lisp,  src/package.lisp,
+   test/<name>.lisp, test/package.lisp
    which is a rudimentary skeleton for a Common Lisp ASDF package
-   and system definition"
+   and system definition, with a spot for unit tests"
   (interactive "sName of package: ")
   (when (stringp name)
     (flet ((basename (filename &optional (sep "/"))

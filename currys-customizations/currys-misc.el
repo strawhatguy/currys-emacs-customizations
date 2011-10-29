@@ -49,6 +49,8 @@ The output appears in the buffer `*Async Shell Command*'."
 (setq-default indent-tabs-mode nil)
 ;;;; Shut off a really annoying new dialog box
 (setq use-file-dialog nil)
+;;;; Somehow this variable for help-mode was unbound in Ubuntu's emacs?  weird
+(setq help-xref-following nil)
 
 ;;;; Buffer menu mode sort function
 (defun buffer-list-sort (column)
