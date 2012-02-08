@@ -97,6 +97,12 @@ The output appears in the buffer `*Async Shell Command*'."
              (expand-file-name "~/.ac-dict"))
 (ac-config-default)
 
+;;;; function to make etags on the current directory
+(defun run-etags ()
+  (interactive)
+  (with-temp-buffer 
+    (shell-command "find . -type f ! -regex '.*\.svn.*' -print0 | xargs -0 etags" 
+                   (current-buffer))))
 ;;;; edit-server
 (if (and (daemonp) (locate-library "edit-server"))
     (progn
