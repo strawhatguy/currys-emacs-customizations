@@ -24,6 +24,9 @@
 ;;;; set F5 key to revert-buffer
 (global-set-key [f5] '(lambda () (interactive) (revert-buffer nil t nil)))
 
+;;;; Make C-h C-s go to apropos (basically apropos-symbol)
+(global-set-key [(control h) (control s)] 'apropos)
+
 ;;;; Allow terminal colorization
 (ansi-color-for-comint-mode-on)
 
