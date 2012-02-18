@@ -23,6 +23,14 @@ The output appears in the buffer `*Async Shell Command*'."
 (global-set-key [(meta !)] 'async-shell-command)
 (global-set-key [(control meta !)] 'shell-command)
 
+;;;; Add an alias to eshell to fork off processes
+(defun eshell/fork (&rest args)
+  (lexical-let ((cmd (apply 'concat args)))
+    (async-shell-command cmd (switch-to-buffer (concat "*Async: " cmd "*")))))
+
+;;;; vkill - unix process monitoring
+(require 'vkill)
+
 ;;;; Add tab completion to shell-command mode
 (require 'shell-command)
 (shell-command-completion-mode)
