@@ -52,8 +52,8 @@ The output appears in the buffer `*Async Shell Command*'."
 ;;;; SVN mode
 (require 'psvn)
 
-;;;; Man-mode makes manpage active buffer
-(setq Man-notify-method 'aggressive)
+;;;; Man-mode makes manpage not-active-but-visible buffer
+(setq Man-notify-method 'friendly)
 ;;;; Compilation mode scrolls to first error
 (setq compilation-scroll-output 'first-error)
 ;;;; Turn off tabs
