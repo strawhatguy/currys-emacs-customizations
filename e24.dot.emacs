@@ -1,3 +1,4 @@
+;;;; -*- mode: emacs-lisp -*-
 (require 'package)
 (add-to-list 'package-archives
 	     '("marmalade" . "http://marmalade-repo.org/packages/"))
@@ -49,7 +50,8 @@
 (global-set-key [(meta g)] 'goto-line)
 
 ;;;; set F5 key to revert-buffer
-(global-set-key [f5] '(lambda () (interactive) (revert-buffer nil t nil)))
+(defun reset-buffer () (interactive) (revert-buffer nil t nil))
+(global-set-key [f5] 'reset-buffer)
 
 ;;;; Make C-h C-s go to apropos (basically apropos-symbol)
 (global-set-key [(control h) (control s)] 'apropos)
@@ -108,7 +110,13 @@
              '(common-lisp-mode . slime-complete-symbol))
 (add-to-list 'smart-tab-completion-functions-alist 
              '(slime-repl-mode . slime-complete-symbol))
-(add-hook 'slime-mode-hook 'paredit-mode)
 
 (add-hook 'lisp-mode-hook 'smart-tab-mode-on)
 (add-hook 'common-lisp-mode-hook 'smart-tab-mode-on)
+
+;;;; Enable paredit-mode for all lisps
+(add-hook 'slime-mode-hook            'enable-paredit-mode)
+(add-hook 'emacs-lisp-mode-hook       'enable-paredit-mode)
+(add-hook 'lisp-mode-hook             'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
+(add-hook 'scheme-mode-hook           'enable-paredit-mode)
