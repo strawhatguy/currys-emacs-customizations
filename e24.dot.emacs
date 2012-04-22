@@ -32,6 +32,8 @@
   (when (not (package-installed-p p))
     (package-install p)))
 
+(add-to-list 'load-path (concat user-emacs-directory "include/"))
+
 (load-theme 'zenburn t)
 
 ;;;; auto-complete-mode
@@ -50,7 +52,9 @@
 (global-set-key [(meta g)] 'goto-line)
 
 ;;;; set F5 key to revert-buffer
-(defun reset-buffer () (interactive) (revert-buffer nil t nil))
+(defun reset-buffer () 
+  "Resets a file-buffer reflect the file on disk, resetting modes"
+  (interactive) (revert-buffer nil t nil))
 (global-set-key [f5] 'reset-buffer)
 
 ;;;; Make C-h C-s go to apropos (basically apropos-symbol)
@@ -93,6 +97,11 @@
       (setq browse-url-generic-program browser-path
             browse-url-browser-function 'browse-url-generic)
       (return browser-path))))
+
+;;;; edit-server for chromium browsers
+(when (and (daemonp) (locate-library "edit-server"))
+  (require 'edit-server)
+  (edit-server-start))
 
 ;; ;;;; Load and setup slime
 (load (expand-file-name "~/.quicklisp/slime-helper.el"))

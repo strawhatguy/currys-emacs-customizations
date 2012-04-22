@@ -115,9 +115,8 @@ The output appears in the buffer `*Async Shell Command*'."
     (shell-command "find . -type f ! -regex '.*\.svn.*' -print0 | xargs -0 etags" 
                    (current-buffer))))
 ;;;; edit-server
-(if (and (daemonp) (locate-library "edit-server"))
-    (progn
-      (require 'edit-server)
-      (edit-server-start)))
+(when (and (daemonp) (locate-library "edit-server"))
+  (require 'edit-server)
+  (edit-server-start))
 
 (provide 'currys-misc)
