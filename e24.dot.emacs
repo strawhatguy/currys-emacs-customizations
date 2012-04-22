@@ -103,29 +103,31 @@
   (require 'edit-server)
   (edit-server-start))
 
-;; ;;;; Load and setup slime
-(load (expand-file-name "~/.quicklisp/slime-helper.el"))
-
-(setq slime-net-coding-system 'utf-8-unix)
-(setq slime-lisp-implementations
-      '((sbcl ("/usr/local/bin/sbcl") :coding-system utf-8-unix)
-        (ecl ("ecl"))))
-
-;;;; Add per lisp hooks to turn on smart-tab-mode
+;;;; Turn on smart-tabbing everywhere
 (global-smart-tab-mode 1)
-(add-to-list 'smart-tab-completion-functions-alist 
-             '(lisp-mode . slime-complete-symbol))
-(add-to-list 'smart-tab-completion-functions-alist 
-             '(common-lisp-mode . slime-complete-symbol))
-(add-to-list 'smart-tab-completion-functions-alist 
-             '(slime-repl-mode . slime-complete-symbol))
-
 (add-hook 'lisp-mode-hook 'smart-tab-mode-on)
 (add-hook 'common-lisp-mode-hook 'smart-tab-mode-on)
 
 ;;;; Enable paredit-mode for all lisps
-(add-hook 'slime-mode-hook            'enable-paredit-mode)
+(require 'paredit)
 (add-hook 'emacs-lisp-mode-hook       'enable-paredit-mode)
 (add-hook 'lisp-mode-hook             'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
 (add-hook 'scheme-mode-hook           'enable-paredit-mode)
+
+;;;; Load and setup slime
+(let ((slime-helper (expand-file-name "~/.quicklisp/slime-helper.el")))
+  (when (file-exists-p slime-helper)
+    (load slime-helper)
+    (setq slime-net-coding-system 'utf-8-unix)
+    (setq slime-lisp-implementations
+          '((sbcl ("/usr/local/bin/sbcl") :coding-system utf-8-unix)
+            (ecl ("ecl"))))
+    (add-hook 'slime-mode-hook 'enable-paredit-mode)
+    ;; Use slime-complete-symbol with smart-tab
+    (add-to-list 'smart-tab-completion-functions-alist 
+                 '(lisp-mode . slime-complete-symbol))
+    (add-to-list 'smart-tab-completion-functions-alist 
+                 '(common-lisp-mode . slime-complete-symbol))
+    (add-to-list 'smart-tab-completion-functions-alist 
+                 '(slime-repl-mode . slime-complete-symbol))))
