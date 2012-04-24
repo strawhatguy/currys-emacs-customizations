@@ -103,17 +103,35 @@
   (require 'edit-server)
   (edit-server-start))
 
+;;;; Add an alias to eshell to fork off processes
+(defun eshell/fork (&rest args)
+  (lexical-let ((cmd ""))
+    (dolist (arg args)
+      (setf cmd (concat cmd " " arg)))
+    (setf cmd (subseq cmd 1))
+    (async-shell-command cmd (switch-to-buffer (concat "*Async: " cmd "*")))))
+
 ;;;; Turn on smart-tabbing everywhere
 (global-smart-tab-mode 1)
-(add-hook 'lisp-mode-hook 'smart-tab-mode-on)
-(add-hook 'common-lisp-mode-hook 'smart-tab-mode-on)
 
-;;;; Enable paredit-mode for all lisps
+;;;; Some rcirc mode configuration
+(add-to-list 'smart-tab-completion-functions-alist 
+             '(rcirc-mode . rcirc-complete))
+(setq rcirc-default-full-name "Matthew Curry")
+
+;;;; Enable paredit-mode for all lisps, disable paredit's C-j
 (require 'paredit)
+(define-key paredit-mode-map "\C-j" nil)
 (add-hook 'emacs-lisp-mode-hook       'enable-paredit-mode)
 (add-hook 'lisp-mode-hook             'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
 (add-hook 'scheme-mode-hook           'enable-paredit-mode)
+(add-hook 'ielm-mode-hook             'enable-paredit-mode)
+
+;;;; Advice for ielm-mode
+(defadvice ielm-eval-input (after ielm-paredit activate)
+  "Begin each IELM prompt with a ParEdit parenthesis pair."
+  (paredit-open-round))
 
 ;;;; Load and setup slime
 (let ((slime-helper (expand-file-name "~/.quicklisp/slime-helper.el")))
@@ -123,11 +141,14 @@
     (setq slime-lisp-implementations
           '((sbcl ("/usr/local/bin/sbcl") :coding-system utf-8-unix)
             (ecl ("ecl"))))
-    (add-hook 'slime-mode-hook 'enable-paredit-mode)
     ;; Use slime-complete-symbol with smart-tab
     (add-to-list 'smart-tab-completion-functions-alist 
                  '(lisp-mode . slime-complete-symbol))
     (add-to-list 'smart-tab-completion-functions-alist 
                  '(common-lisp-mode . slime-complete-symbol))
     (add-to-list 'smart-tab-completion-functions-alist 
-                 '(slime-repl-mode . slime-complete-symbol))))
+                 '(slime-repl-mode . slime-complete-symbol))
+
+    ;;;; Hook in paredit to slime
+    (add-hook 'slime-mode-hook      'enable-paredit-mode)
+    (add-hook 'slime-repl-mode-hook 'enable-paredit-mode))
