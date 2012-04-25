@@ -41,6 +41,10 @@
 (add-to-list 'ac-dictionary-directories 
              (expand-file-name "~/.ac-dict"))
 (ac-config-default)
+(defun enable-auto-complete-mode ()
+  (auto-complete-mode 1))
+(defun disable-auto-complete-mode ()
+  (auto-complete-mode 0))
 
 ;;;; Stop making backup files
 (setq make-backup-files nil)
@@ -148,6 +152,10 @@
                  '(common-lisp-mode . slime-complete-symbol))
     (add-to-list 'smart-tab-completion-functions-alist 
                  '(slime-repl-mode . slime-complete-symbol))
+
+    ;;;; Disable auto-complete-mode for slime
+    (add-hook 'slime-mode-hook      'disable-auto-complete-mode)
+    (add-hook 'slime-repl-mode-hook 'disable-auto-complete-mode)
 
     ;;;; Hook in paredit to slime
     (add-hook 'slime-mode-hook      'enable-paredit-mode)
