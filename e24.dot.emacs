@@ -1,9 +1,9 @@
 ;;;; -*- mode: emacs-lisp -*-
 (require 'package)
-(add-to-list 'package-archives
-	     '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives 
              '("tromey" . "http://tromey.com/elpa/"))
+(add-to-list 'package-archives
+	     '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
 (when (not package-archive-contents)
@@ -151,4 +151,4 @@
 
     ;;;; Hook in paredit to slime
     (add-hook 'slime-mode-hook      'enable-paredit-mode)
-    (add-hook 'slime-repl-mode-hook 'enable-paredit-mode))
+    (add-hook 'slime-repl-mode-hook 'enable-paredit-mode)))
