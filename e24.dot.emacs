@@ -16,7 +16,6 @@
                       starter-kit-ruby
                       auto-complete 
                       zenburn-theme 
-                      smart-tab 
                       dsvn
                       clojure-mode
                       markdown-mode
@@ -115,12 +114,7 @@
     (setf cmd (subseq cmd 1))
     (async-shell-command cmd (switch-to-buffer (concat "*Async: " cmd "*")))))
 
-;;;; Turn on smart-tabbing everywhere
-(global-smart-tab-mode 1)
-
 ;;;; Some rcirc mode configuration
-(add-to-list 'smart-tab-completion-functions-alist 
-             '(rcirc-mode . rcirc-complete))
 (setq rcirc-default-full-name "Matthew Curry")
 
 ;;;; Enable paredit-mode for all lisps, disable paredit's C-j
@@ -145,13 +139,6 @@
     (setq slime-lisp-implementations
           '((sbcl ("/usr/local/bin/sbcl") :coding-system utf-8-unix)
             (ecl ("ecl"))))
-    ;; Use slime-complete-symbol with smart-tab
-    (add-to-list 'smart-tab-completion-functions-alist 
-                 '(lisp-mode . slime-complete-symbol))
-    (add-to-list 'smart-tab-completion-functions-alist 
-                 '(common-lisp-mode . slime-complete-symbol))
-    (add-to-list 'smart-tab-completion-functions-alist 
-                 '(slime-repl-mode . slime-complete-symbol))
 
     ;;;; Disable auto-complete-mode for slime
     (add-hook 'slime-mode-hook      'disable-auto-complete-mode)
