@@ -121,15 +121,20 @@
 (require 'paredit)
 (define-key paredit-mode-map "\C-j" nil)
 (add-hook 'emacs-lisp-mode-hook       'enable-paredit-mode)
+(add-hook 'ielm-mode-hook             'enable-paredit-mode)
 (add-hook 'lisp-mode-hook             'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
 (add-hook 'scheme-mode-hook           'enable-paredit-mode)
-(add-hook 'ielm-mode-hook             'enable-paredit-mode)
+(add-hook 'inferior-scheme-mode-hook  'enable-paredit-mode)
 
 ;;;; Advice for ielm-mode
 (defadvice ielm-eval-input (after ielm-paredit activate)
   "Begin each IELM prompt with a ParEdit parenthesis pair."
   (paredit-open-round))
+
+;;;; scheme program, use guile
+(require 'cmuscheme)
+(setq scheme-program-name "guile")
 
 ;;;; Load and setup slime
 (let ((slime-helper (expand-file-name "~/.quicklisp/slime-helper.el")))
@@ -141,6 +146,7 @@
             (ecl ("ecl"))))
     ;;;; Enable slime completion
     (define-key slime-mode-map [(tab)] 'slime-indent-and-complete-symbol)
+    (define-key slime-repl-mode-map [(tab)] 'slime-indent-and-complete-symbol)
 
     ;;;; Disable auto-complete-mode for slime
     (add-hook 'slime-mode-hook      'disable-auto-complete-mode)
