@@ -121,6 +121,9 @@
 ;;;; Some rcirc mode configuration
 (setq rcirc-default-full-name "Matthew Curry")
 
+;;;; js2 indent 2 spaces
+(set-default 'js2-basic-offset 2)
+
 ;;;; Enable paredit-mode for all lisps, disable paredit's C-j
 (require 'paredit)
 (define-key paredit-mode-map "\C-j" nil)
