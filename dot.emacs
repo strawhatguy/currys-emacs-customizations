@@ -50,6 +50,10 @@
 
 ;;;; Make control tab switch buffer windows
 (global-set-key [(control tab)] 'other-window)
+(defun other-window-backwards (&optional count all-frames)
+  (interactive)
+  (other-window (if count (- count) -1) all-frames))
+(global-set-key [(control shift iso-lefttab)] 'other-window-backwards)
 
 ;;;; Make meta g to goto-line
 (global-set-key [(meta g)] 'goto-line)
