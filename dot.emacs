@@ -152,8 +152,12 @@
           '((sbcl ("/usr/local/bin/sbcl") :coding-system utf-8-unix)
             (ecl ("ecl"))))
     ;;;; Enable slime completion
-    (define-key slime-mode-map [(tab)] 'slime-indent-and-complete-symbol)
-    (define-key slime-repl-mode-map [(tab)] 'slime-indent-and-complete-symbol)
+    (add-hook 'slime-mode-hook      
+              (lambda () (define-key slime-mode-map [(tab)] 
+                      'slime-indent-and-complete-symbol)))
+    (add-hook 'slime-repl-mode-hook      
+              (lambda () (define-key slime-repl-mode-map [(tab)] 
+                      'slime-indent-and-complete-symbol)))
 
     ;;;; Disable auto-complete-mode for slime
     (add-hook 'slime-mode-hook      'disable-auto-complete-mode)
