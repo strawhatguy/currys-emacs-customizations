@@ -123,16 +123,23 @@
 
 ;;;; js2 indent 2 spaces
 (set-default 'js2-basic-offset 2)
+(set-default 'js2-mirror-mode  nil)
+(set-default 'js2-mode-escape-quotes  nil)
 
 ;;;; Enable paredit-mode for all lisps, disable paredit's C-j
 (require 'paredit)
-(define-key paredit-mode-map "\C-j" nil)
+(define-key paredit-mode-map (kbd "C-j") nil)
+(define-key paredit-mode-map (kbd "C-M-n") 'paredit-forward)
+(define-key paredit-mode-map (kbd "C-M-p") 'paredit-backward)
+(define-key paredit-mode-map (kbd "C-M-f") 'paredit-forward-up)
+(define-key paredit-mode-map (kbd "C-M-b") 'paredit-backward-down)
 (add-hook 'emacs-lisp-mode-hook       'enable-paredit-mode)
 (add-hook 'ielm-mode-hook             'enable-paredit-mode)
 (add-hook 'lisp-mode-hook             'enable-paredit-mode)
 (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
 (add-hook 'scheme-mode-hook           'enable-paredit-mode)
 (add-hook 'inferior-scheme-mode-hook  'enable-paredit-mode)
+(add-hook 'js2-mode-hook              'enable-paredit-mode)
 
 ;;;; Advice for ielm-mode
 (defadvice ielm-eval-input (after ielm-paredit activate)
