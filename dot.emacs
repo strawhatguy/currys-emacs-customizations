@@ -151,6 +151,13 @@
     (setq slime-lisp-implementations
           '((sbcl ("/usr/local/bin/sbcl") :coding-system utf-8-unix)
             (ecl ("ecl"))))
+
+    ;; slime-connect to stumpwm
+    (defun stumpwm-connect ()
+      "slime-connect to stumpwm" 
+      (interactive)
+      (slime-connect "127.0.0.1" 5004))
+
     ;;;; Enable slime completion
     (add-hook 'slime-mode-hook      
               (lambda () (define-key slime-mode-map [(tab)] 
