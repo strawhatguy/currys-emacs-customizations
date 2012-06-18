@@ -139,7 +139,6 @@
 (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
 (add-hook 'scheme-mode-hook           'enable-paredit-mode)
 (add-hook 'inferior-scheme-mode-hook  'enable-paredit-mode)
-(add-hook 'js2-mode-hook              'enable-paredit-mode)
 
 ;;;; Advice for ielm-mode
 (defadvice ielm-eval-input (after ielm-paredit activate)
