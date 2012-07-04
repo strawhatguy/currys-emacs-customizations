@@ -25,6 +25,7 @@
                       oddmuse
                       js2-mode
                       rinari
+                      twittering-mode
                       ))
 
 (dolist (p my-packages)
@@ -120,6 +121,9 @@
 
 ;;;; Some rcirc mode configuration
 (setq rcirc-default-full-name "Matthew Curry")
+
+;;;; Twittering mode
+(setq twittering-use-master-password t)
 
 ;;;; js2 indent 2 spaces
 (set-default 'js2-basic-offset 2)
