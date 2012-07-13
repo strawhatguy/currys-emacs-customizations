@@ -68,6 +68,19 @@
 ;;;; Make C-h C-s go to apropos (basically apropos-symbol)
 (global-set-key [(control h) (control s)] 'apropos)
 
+;;;; Advise the shell commands to name the buffer after the command itself
+(defadvice async-shell-command (before buffer-named-with-command
+                                       (command &optional output-buffer error-buffer))
+  (when (null output-buffer)
+    (setq output-buffer (switch-to-buffer (concat "*Async: " command "*")))))
+(ad-activate 'async-shell-command)
+
+(defadvice shell-command (before buffer-named-with-command
+                                 (command &optional output-buffer error-buffer))
+  (when (null output-buffer)
+    (setq output-buffer (switch-to-buffer (concat "*Shell: " command "*")))))
+(ad-activate 'shell-command)
+
 ;;;; Remap shortcuts to use async-shell-command by default
 (global-set-key [(meta !)] 'async-shell-command)
 (global-set-key [(control meta !)] 'shell-command)
@@ -117,7 +130,7 @@
     (dolist (arg args)
       (setf cmd (concat cmd " " arg)))
     (setf cmd (subseq cmd 1))
-    (async-shell-command cmd (switch-to-buffer (concat "*Async: " cmd "*")))))
+    (async-shell-command cmd)))
 
 ;;;; Some rcirc mode configuration
 (setq rcirc-default-full-name "Matthew Curry")
