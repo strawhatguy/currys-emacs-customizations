@@ -26,6 +26,7 @@
                       js2-mode
                       rinari
                       twittering-mode
+                      yasnippet-bundle
                       ))
 
 (dolist (p my-packages)
@@ -35,6 +36,9 @@
 (add-to-list 'load-path (concat user-emacs-directory "include/"))
 
 (load-theme 'zenburn t)
+
+;;;; Shut off auto fill mode
+(remove-hook 'text-mode-hook 'turn-on-auto-fill)
 
 ;;;; auto-complete-mode
 (require 'auto-complete-config)
