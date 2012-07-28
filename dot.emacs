@@ -40,6 +40,12 @@
 ;;;; Shut off auto fill mode
 (remove-hook 'text-mode-hook 'turn-on-auto-fill)
 
+;;;; Reset yasnippet trigger key
+(require 'yasnippet)
+(setq yas/trigger-key (kbd "C-c <kp-multiply>"))
+(define-key yas/minor-mode-map (kbd "TAB") nil)
+(yas/initialize)
+
 ;;;; auto-complete-mode
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories 
