@@ -37,6 +37,11 @@
 
 (load-theme 'zenburn t)
 
+;;;; Darwin fix for dired-mode
+(when (eq system-type 'darwin)
+  (setq dired-mode-hook nil)
+  (setq dired-use-ls-dired nil))
+
 ;;;; Shut off auto fill mode
 (remove-hook 'text-mode-hook 'turn-on-auto-fill)
 
