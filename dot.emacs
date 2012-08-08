@@ -27,6 +27,7 @@
                       rinari
                       twittering-mode
                       yasnippet-bundle
+                      ace-jump-mode
                       ))
 
 (dolist (p my-packages)
@@ -44,6 +45,10 @@
 
 ;;;; Shut off auto fill mode
 (remove-hook 'text-mode-hook 'turn-on-auto-fill)
+
+;;;; ace-jump
+(require 'ace-jump-mode)
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
 ;;;; Reset yasnippet trigger key
 (require 'yasnippet)
