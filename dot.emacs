@@ -26,7 +26,7 @@
                       js2-mode
                       rinari
                       twittering-mode
-                      yasnippet-bundle
+                      yasnippet
                       ace-jump-mode
                       wgrep
                       ))
@@ -67,6 +67,7 @@
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories 
              (expand-file-name "~/.ac-dict"))
+;;;; ac-common-setup is called by ac-config-default
 (defun ac-common-setup ()
   (add-to-list 'ac-sources 'ac-source-yasnippet))
 (ac-config-default)
