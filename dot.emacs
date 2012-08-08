@@ -28,6 +28,7 @@
                       twittering-mode
                       yasnippet-bundle
                       ace-jump-mode
+                      wgrep
                       ))
 
 (dolist (p my-packages)
@@ -49,6 +50,12 @@
 ;;;; ace-jump
 (require 'ace-jump-mode)
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+
+;;;; writable grep buffers via toggling off read-only (similar to
+;;;; wdired mode for dired buffers)
+(require 'wgrep)
+(define-key grep-mode-map (kbd "C-x C-q") 'wgrep-change-to-wgrep-mode)
+(setq wgrep-auto-save-buffer t)
 
 ;;;; Reset yasnippet trigger key
 (require 'yasnippet)
