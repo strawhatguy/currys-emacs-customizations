@@ -67,6 +67,8 @@
 (require 'auto-complete-config)
 (add-to-list 'ac-dictionary-directories 
              (expand-file-name "~/.ac-dict"))
+(defun ac-common-setup ()
+  (add-to-list 'ac-sources 'ac-source-yasnippet))
 (ac-config-default)
 (defun enable-auto-complete-mode ()
   (auto-complete-mode 1))
