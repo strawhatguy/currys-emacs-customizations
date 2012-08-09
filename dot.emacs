@@ -62,6 +62,13 @@
 (setq yas/trigger-key (kbd "C-c <kp-multiply>"))
 (define-key yas/minor-mode-map (kbd "TAB") nil)
 (yas/initialize)
+(if yas/root-directory
+  (setq yas/root-directory (list yas/root-directory))
+  (add-to-list 'yas/root-directory 
+               (car (file-expand-wildcards
+                     "~/.emacs.d/elpa/yasnippet-*/snippets"))))
+(add-to-list 'yas/root-directory "~/.emacs.d/snippets")
+(yas/reload-all)
 
 ;;;; auto-complete-mode
 (require 'auto-complete-config)
