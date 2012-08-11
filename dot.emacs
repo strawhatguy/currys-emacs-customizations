@@ -41,6 +41,7 @@
 
 ;;;; Darwin fix for dired-mode
 (when (eq system-type 'darwin)
+  (menu-bar-mode 1)
   (setq dired-use-ls-dired nil))
 
 ;;;; Shut off auto fill mode
@@ -66,6 +67,7 @@
   (add-to-list 'yas/root-directory 
                (car (file-expand-wildcards
                      "~/.emacs.d/elpa/yasnippet-*/snippets"))))
+(mkdir "~/.emacs.d/snippets" t)
 (add-to-list 'yas/root-directory "~/.emacs.d/snippets")
 (yas/reload-all)
 
