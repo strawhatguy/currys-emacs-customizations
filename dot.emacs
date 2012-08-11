@@ -18,13 +18,13 @@
                       zenburn-theme 
                       dsvn
                       clojure-mode
+                      ruby-compilation
                       markdown-mode
                       yaml-mode
                       tuareg
                       marmalade
                       oddmuse
                       js2-mode
-                      rinari
                       twittering-mode
                       yasnippet
                       ace-jump-mode
@@ -41,7 +41,6 @@
 
 ;;;; Darwin fix for dired-mode
 (when (eq system-type 'darwin)
-  (setq dired-mode-hook nil)
   (setq dired-use-ls-dired nil))
 
 ;;;; Shut off auto fill mode
