@@ -39,9 +39,10 @@
 
 (load-theme 'zenburn t)
 
-;;;; Darwin fix for dired-mode
+;;;; Darwin fixes
 (when (eq system-type 'darwin)
   (menu-bar-mode 1)
+  (setenv "LANG" "en_US.UTF-8")
   (setq dired-use-ls-dired nil))
 
 ;;;; Shut off auto fill mode
