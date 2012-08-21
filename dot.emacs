@@ -42,6 +42,8 @@
 ;;;; Darwin fix for dired-mode
 (when (eq system-type 'darwin)
   (setq dired-use-ls-dired nil))
+;;;; make unlimited (was cutting off function names, which breaks things
+(setq imenu-max-item-length t)
 
 ;;;; Shut off auto fill mode
 (remove-hook 'text-mode-hook 'turn-on-auto-fill)
