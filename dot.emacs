@@ -39,8 +39,10 @@
 
 (load-theme 'zenburn t)
 
-;;;; Darwin fix for dired-mode
+;;;; Darwin fixes
 (when (eq system-type 'darwin)
+  (menu-bar-mode 1)
+  (setenv "LANG" "en_US.UTF-8")
   (setq dired-use-ls-dired nil))
 ;;;; make unlimited (was cutting off function names, which breaks things
 (setq imenu-max-item-length t)
@@ -68,6 +70,7 @@
   (add-to-list 'yas/root-directory 
                (car (file-expand-wildcards
                      "~/.emacs.d/elpa/yasnippet-*/snippets"))))
+(mkdir "~/.emacs.d/snippets" t)
 (add-to-list 'yas/root-directory "~/.emacs.d/snippets")
 (yas/reload-all)
 
@@ -78,6 +81,8 @@
 ;;;; ac-common-setup is called by ac-config-default
 (defun ac-common-setup ()
   (add-to-list 'ac-sources 'ac-source-yasnippet))
+(add-to-list 'ac-modes 'html-mode)
+(add-to-list 'ac-modes 'nxml-mode)
 (ac-config-default)
 (defun enable-auto-complete-mode ()
   (auto-complete-mode 1))
