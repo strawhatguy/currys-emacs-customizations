@@ -18,6 +18,7 @@
                       zenburn-theme 
                       dsvn
                       clojure-mode
+                      haskell-mode
                       ruby-compilation
                       markdown-mode
                       yaml-mode
@@ -207,6 +208,9 @@
 (require 'cmuscheme)
 (setq scheme-program-name "guile")
 
+;;;; clojure
+(remove-hook 'clojure-mode-hook    'clojure-enable-slime)
+
 ;;;; Load and setup slime
 (let ((slime-helper (expand-file-name "~/.quicklisp/slime-helper.el")))
   (when (file-exists-p slime-helper)
@@ -229,6 +233,9 @@
     (add-hook 'slime-repl-mode-hook      
               (lambda () (define-key slime-repl-mode-map [(tab)] 
                       'slime-indent-and-complete-symbol)))
+
+    ;;;; Disable slime for clojure (use nrepl or lisp-mode instead)
+    (remove-hook 'slime-connected-hook 'clojure-enable-slime-on-existing-buffers)
 
     ;;;; Disable auto-complete-mode for slime
     (add-hook 'slime-mode-hook      'disable-auto-complete-mode)
