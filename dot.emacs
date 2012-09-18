@@ -45,6 +45,7 @@
   (menu-bar-mode 1)
   (setenv "LANG" "en_US.UTF-8")
   (setq dired-use-ls-dired nil))
+
 ;;;; make unlimited (was cutting off function names, which breaks things
 (setq imenu-max-item-length t)
 
@@ -108,6 +109,10 @@
   "Resets a file-buffer reflect the file on disk, resetting modes"
   (interactive) (revert-buffer nil t nil))
 (global-set-key [f5] 'reset-buffer)
+
+;;;; set f8 to be recompile, shift-f8 to compile
+(global-set-key [f8]   'recompile)
+(global-set-key [S-f8] 'compile)
 
 ;;;; Make C-h C-s go to apropos (basically apropos-symbol)
 (global-set-key [(control h) (control s)] 'apropos)
