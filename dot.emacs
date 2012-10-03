@@ -16,6 +16,7 @@
                       starter-kit-ruby
                       auto-complete 
                       zenburn-theme 
+                      solarized-theme
                       dsvn
                       clojure-mode
                       haskell-mode
@@ -29,6 +30,7 @@
                       twittering-mode
                       yasnippet
                       ace-jump-mode
+                      multiple-cursors
                       wgrep
                       ))
 
@@ -45,6 +47,7 @@
   (menu-bar-mode 1)
   (setenv "LANG" "en_US.UTF-8")
   (setq dired-use-ls-dired nil))
+
 ;;;; make unlimited (was cutting off function names, which breaks things
 (setq imenu-max-item-length t)
 
@@ -54,6 +57,13 @@
 ;;;; ace-jump
 (require 'ace-jump-mode)
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+
+;;;; multiple-cursor mode
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
 
 ;;;; writable grep buffers via toggling off read-only (similar to
 ;;;; wdired mode for dired buffers)
@@ -108,6 +118,17 @@
   "Resets a file-buffer reflect the file on disk, resetting modes"
   (interactive) (revert-buffer nil t nil))
 (global-set-key [f5] 'reset-buffer)
+
+;;;; set f8 to be recompile, shift-f8 to compile
+(global-set-key [f8]   'recompile)
+(global-set-key [S-f8] 'compile)
+;; Close the compilation window if there was no error at all.
+(setq compilation-exit-message-function
+      (lambda (status code msg)
+        (when (and (eq status 'exit) (zerop code))
+  	  (bury-buffer "*compilation*")
+  	  (replace-buffer-in-windows "*compilation*"))
+  	(cons msg code)))
 
 ;;;; Make C-h C-s go to apropos (basically apropos-symbol)
 (global-set-key [(control h) (control s)] 'apropos)
