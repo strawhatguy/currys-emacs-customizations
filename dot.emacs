@@ -14,7 +14,8 @@
                       starter-kit-eshell
                       starter-kit-bindings
                       starter-kit-ruby
-                      auto-complete 
+                      auto-complete
+                      ac-slime
                       zenburn-theme 
                       solarized-theme
                       dsvn
@@ -74,13 +75,12 @@
 ;;;; Reset yasnippet trigger key
 (require 'yasnippet)
 (setq yas/trigger-key (kbd "C-c <kp-multiply>"))
-(define-key yas/minor-mode-map (kbd "TAB") nil)
-(yas/initialize)
-(if yas/root-directory
-  (setq yas/root-directory (list yas/root-directory))
-  (add-to-list 'yas/root-directory 
-               (car (file-expand-wildcards
-                     "~/.emacs.d/elpa/yasnippet-*/snippets"))))
+(define-key yas/keymap (kbd "TAB") nil)
+(yas-global-mode 1)
+
+(add-to-list 'yas/root-directory 
+             (car (file-expand-wildcards
+                   "~/.emacs.d/elpa/yasnippet-*/snippets")))
 (mkdir "~/.emacs.d/snippets" t)
 (add-to-list 'yas/root-directory "~/.emacs.d/snippets")
 (yas/reload-all)
@@ -250,19 +250,19 @@
       (slime-connect "127.0.0.1" 5004))
 
     ;;;; Enable slime completion
-    (add-hook 'slime-mode-hook      
+    (require 'ac-slime)
+    (add-hook 'slime-mode-hook 'set-up-slime-ac)
+    (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+    (add-to-list 'ac-modes 'slime-repl-mode)
+    (add-hook 'slime-mode-hook 
               (lambda () (define-key slime-mode-map [(tab)] 
                       'slime-indent-and-complete-symbol)))
-    (add-hook 'slime-repl-mode-hook      
+    (add-hook 'slime-repl-mode-hook 
               (lambda () (define-key slime-repl-mode-map [(tab)] 
                       'slime-indent-and-complete-symbol)))
 
     ;;;; Disable slime for clojure (use nrepl or lisp-mode instead)
     (remove-hook 'slime-connected-hook 'clojure-enable-slime-on-existing-buffers)
-
-    ;;;; Disable auto-complete-mode for slime
-    (add-hook 'slime-mode-hook      'disable-auto-complete-mode)
-    (add-hook 'slime-repl-mode-hook 'disable-auto-complete-mode)
 
     ;;;; Hook in paredit to slime
     (add-hook 'slime-mode-hook      'enable-paredit-mode)
