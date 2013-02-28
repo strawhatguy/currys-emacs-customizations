@@ -233,9 +233,6 @@
 (require 'cmuscheme)
 (setq scheme-program-name "guile")
 
-;;;; clojure
-(remove-hook 'clojure-mode-hook    'clojure-enable-slime)
-
 ;;;; Load and setup slime
 (let ((slime-helper (expand-file-name "~/.quicklisp/slime-helper.el")))
   (when (file-exists-p slime-helper)
@@ -243,7 +240,7 @@
     (setq slime-net-coding-system 'utf-8-unix)
     (setq slime-lisp-implementations
           '((sbcl ("/usr/local/bin/sbcl") :coding-system utf-8-unix)
-            (ecl ("ecl"))))
+            (ecl ("/usr/local/bin/ecl"))))
 
     ;; slime-connect to stumpwm
     (defun stumpwm-connect ()
@@ -262,9 +259,6 @@
     (add-hook 'slime-repl-mode-hook 
               (lambda () (define-key slime-repl-mode-map [(tab)] 
                       'slime-indent-and-complete-symbol)))
-
-    ;;;; Disable slime for clojure (use nrepl or lisp-mode instead)
-    (remove-hook 'slime-connected-hook 'clojure-enable-slime-on-existing-buffers)
 
     ;;;; Hook in paredit to slime
     (add-hook 'slime-mode-hook      'enable-paredit-mode)
