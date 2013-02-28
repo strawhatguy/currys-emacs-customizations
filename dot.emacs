@@ -125,12 +125,12 @@
 (global-set-key [f8]   'recompile)
 (global-set-key [S-f8] 'compile)
 ;; Close the compilation window if there was no error at all.
-(setq compilation-exit-message-function
-      (lambda (status code msg)
-        (when (and (eq status 'exit) (zerop code))
-  	  (bury-buffer "*compilation*")
-  	  (replace-buffer-in-windows "*compilation*"))
-  	(cons msg code)))
+;; (setq compilation-exit-message-function
+;;       (lambda (status code msg)
+;;         (when (and (eq status 'exit) (zerop code))
+;;   	  (bury-buffer "*compilation*")
+;;   	  (replace-buffer-in-windows "*compilation*"))
+;;   	(cons msg code)))
 
 ;;;; Make C-h C-s go to apropos (basically apropos-symbol)
 (global-set-key [(control h) (control s)] 'apropos)
