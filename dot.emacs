@@ -22,6 +22,7 @@
                       solarized-theme
                       dsvn
                       clojure-mode
+                      nrepl
                       haskell-mode
                       ruby-compilation
                       markdown-mode
@@ -47,9 +48,11 @@
 
 ;;;; Darwin fixes
 (when (eq system-type 'darwin)
+  (setq ns-function-modifier 'hyper)
   (menu-bar-mode 1)
   (setenv "LANG" "en_US.UTF-8")
-  (setq dired-use-ls-dired nil))
+  (setq dired-use-ls-dired nil)
+  (setenv "PATH" "/Users/mjcurry/bin:/opt/local/libexec/gnubin:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/local/bin:/opt/local/libexec/gnubin:/usr/X11/bin"))
 
 ;;;; make unlimited (was cutting off function names, which breaks things
 (setq imenu-max-item-length t)
