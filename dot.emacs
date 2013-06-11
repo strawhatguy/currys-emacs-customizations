@@ -63,7 +63,7 @@
 
 ;;;; ace-jump
 (require 'ace-jump-mode)
-(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+(global-set-key (kbd "C-c SPC") 'ace-jump-mode)
 
 ;;;; multiple-cursor mode
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
