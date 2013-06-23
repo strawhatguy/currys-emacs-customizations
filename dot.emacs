@@ -32,6 +32,7 @@
                       oddmuse
                       js2-mode
                       twittering-mode
+                      jabber
                       yasnippet
                       ace-jump-mode
                       multiple-cursors
@@ -77,6 +78,44 @@
 (require 'expand-region)
 (global-set-key (kbd "s-=") 'er/expand-region)
 (global-set-key (kbd "s--") 'er/contract-region)
+
+;;;; jabber
+(eval-after-load 'jabber
+  (progn
+    (setq jabber-account-list (quote (("mcurry@im.skarven.net" (:port . 5223) (:connection-type . ssl)))))
+   (setq jabber-autoaway-method nil)
+   (setq jabber-chat-foreign-prompt-format "[%t] %n> 
+        ")
+   (setq jabber-chat-local-prompt-format "[%t] %n>
+        ")
+   (setq jabber-roster-show-title nil)))
+
+;;;; toggle horizontal/vertical splitting
+(defun toggle-window-split ()
+  (interactive)
+  (if (= (count-windows) 2)
+      (let* ((this-win-buffer (window-buffer))
+             (next-win-buffer (window-buffer (next-window)))
+             (this-win-edges (window-edges (selected-window)))
+             (next-win-edges (window-edges (next-window)))
+             (this-win-2nd (not (and (<= (car this-win-edges)
+                                         (car next-win-edges))
+                                     (<= (cadr this-win-edges)
+                                         (cadr next-win-edges)))))
+             (splitter
+              (if (= (car this-win-edges)
+                     (car (window-edges (next-window))))
+                  'split-window-horizontally
+                'split-window-vertically)))
+        (delete-other-windows)
+        (let ((first-win (selected-window)))
+          (funcall splitter)
+          (if this-win-2nd (other-window 1))
+          (set-window-buffer (selected-window) this-win-buffer)
+          (set-window-buffer (next-window) next-win-buffer)
+          (select-window first-win)
+          (if this-win-2nd (other-window 1))))))
+(global-set-key [f9]   'toggle-window-split)
 
 ;;;; writable grep buffers via toggling off read-only (similar to
 ;;;; wdired mode for dired buffers)
