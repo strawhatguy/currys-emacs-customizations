@@ -198,16 +198,20 @@
 
 ;;;; Advise the shell commands to name the buffer after the command itself
 (defadvice async-shell-command (before buffer-named-with-command
-                                       (command &optional output-buffer error-buffer))
-  (when (null output-buffer)
-    (setq output-buffer (switch-to-buffer (concat "*Async: " command "*")))))
-(ad-activate 'async-shell-command)
+                                       (command &optional output-buffer error-buffer)
+                                       activate compile)
+  (setq output-buffer (or output-buffer (concat "*Async: " command "*")))
+  (let ((dir default-directory))
+    (switch-to-buffer output-buffer)
+    (setq default-directory dir)))
 
 (defadvice shell-command (before buffer-named-with-command
-                                 (command &optional output-buffer error-buffer))
-  (when (null output-buffer)
-    (setq output-buffer (switch-to-buffer (concat "*Shell: " command "*")))))
-(ad-activate 'shell-command)
+                                 (command &optional output-buffer error-buffer)
+                                 activate compile)
+  (setq output-buffer (or output-buffer (concat "*Shell: " command "*")))
+  (let ((dir default-directory))
+    (switch-to-buffer output-buffer)
+    (setq default-directory dir)))
 
 ;;;; Remap shortcuts to use async-shell-command by default
 (global-set-key [(meta !)] 'async-shell-command)
