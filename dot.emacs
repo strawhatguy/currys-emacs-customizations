@@ -38,6 +38,7 @@
                       multiple-cursors
                       expand-region
                       wgrep
+                      magit-svn
                       ))
 
 (dolist (p my-packages)
