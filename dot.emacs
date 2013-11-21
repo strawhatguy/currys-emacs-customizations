@@ -39,6 +39,8 @@
                       expand-region
                       wgrep
                       magit-svn
+                      puppet-mode
+                      vkill
                       ))
 
 (dolist (p my-packages)
