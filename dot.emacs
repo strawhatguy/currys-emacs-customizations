@@ -15,7 +15,6 @@
                       starter-kit
                       starter-kit-eshell
                       starter-kit-bindings
-                      starter-kit-ruby
                       auto-complete
                       ac-slime
                       zenburn-theme 
@@ -41,6 +40,9 @@
                       magit-svn
                       puppet-mode
                       vkill
+                      google-this
+                      google-maps
+                      google-translate
                       ))
 
 (dolist (p my-packages)
@@ -57,7 +59,7 @@
   (menu-bar-mode 1)
   (setenv "LANG" "en_US.UTF-8")
   (setq dired-use-ls-dired nil)
-  (setenv "PATH" "/Users/mjcurry/bin:/opt/local/libexec/gnubin:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/local/bin:/opt/local/libexec/gnubin:/usr/X11/bin"))
+  (setenv "PATH" "/Users/mjcurry/bin:/opt/local/libexec/gnubin:/usr/local/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin"))
 
 ;;;; make unlimited (was cutting off function names, which breaks things
 (setq imenu-max-item-length t)
