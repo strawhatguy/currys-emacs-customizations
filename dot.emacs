@@ -196,10 +196,10 @@
 (global-set-key [f5] 'reset-buffer)
 
 ;;;; set f8 to be recompile, shift-f8 to compile
-(defun compile-asking-directory (top-level command &optional comint)
-  (interactive "DProject toplevel directory: \nMCompile command: ")
+(defun compile-asking-directory (top-level)
+  (interactive "DProject toplevel directory: ")
   (let ((default-directory top-level))
-    (compile command)))
+    (call-interactively 'compile)))
 (global-set-key [f8]   'recompile)
 (global-set-key [S-f8] 'compile-asking-directory)
 (global-set-key [C-S-f8] 'compile)
