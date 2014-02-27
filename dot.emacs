@@ -88,6 +88,7 @@
 ;;;; magit-status binding
 (require 'magit)
 (global-set-key (kbd "C-c g") 'magit-status)
+(require 'magit-svn)
 
 ;;;; full screen magit-status
 (defadvice magit-status (around magit-fullscreen activate)
@@ -195,8 +196,13 @@
 (global-set-key [f5] 'reset-buffer)
 
 ;;;; set f8 to be recompile, shift-f8 to compile
+(defun compile-asking-directory (top-level command &optional comint)
+  (interactive "DProject toplevel directory: \nMCompile command: ")
+  (let ((default-directory top-level))
+    (compile command)))
 (global-set-key [f8]   'recompile)
-(global-set-key [S-f8] 'compile)
+(global-set-key [S-f8] 'compile-asking-directory)
+(global-set-key [C-S-f8] 'compile)
 
 ;;;; Make C-h C-s go to apropos (basically apropos-symbol)
 (global-set-key [(control h) (control s)] 'apropos)
