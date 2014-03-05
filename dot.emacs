@@ -18,7 +18,6 @@
                       auto-complete
                       ac-slime
                       zenburn-theme 
-                      solarized-theme
                       dsvn
                       clojure-mode
                       nrepl
