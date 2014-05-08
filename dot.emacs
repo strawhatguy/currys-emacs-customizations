@@ -194,7 +194,7 @@
   (interactive) (revert-buffer nil t nil))
 (global-set-key [f5] 'reset-buffer)
 
-;;;; set f8 to be recompile, shift-f8 to compile
+;;;; set f8 to be recompile, shift-f8 to compile, scroll compile buffer
 (defun compile-asking-directory (top-level)
   (interactive "DProject toplevel directory: ")
   (let ((default-directory top-level))
@@ -202,6 +202,7 @@
 (global-set-key [f8]   'recompile)
 (global-set-key [S-f8] 'compile-asking-directory)
 (global-set-key [C-S-f8] 'compile)
+(setq compilation-scroll-output t)
 
 ;;;; Make C-h C-s go to apropos (basically apropos-symbol)
 (global-set-key [(control h) (control s)] 'apropos)
