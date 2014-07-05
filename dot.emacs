@@ -17,6 +17,7 @@
                       starter-kit-bindings
                       auto-complete
                       ac-slime
+                      ac-helm
                       zenburn-theme 
                       dsvn
                       clojure-mode
@@ -42,6 +43,8 @@
                       google-this
                       google-maps
                       google-translate
+                      nodejs-repl
+                      coffee-mode
                       ))
 
 (dolist (p my-packages)
@@ -162,6 +165,8 @@
 
 ;;;; auto-complete-mode
 (require 'auto-complete-config)
+(global-set-key (kbd "C-:") 'ac-complete-with-helm)
+(define-key ac-complete-mode-map (kbd "C-:") 'ac-complete-with-helm)
 (add-to-list 'ac-dictionary-directories 
              (expand-file-name "~/.ac-dict"))
 ;;;; ac-common-setup is called by ac-config-default
