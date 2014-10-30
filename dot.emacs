@@ -45,6 +45,7 @@
                       google-translate
                       nodejs-repl
                       coffee-mode
+                      elnode
                       ))
 
 (dolist (p my-packages)
