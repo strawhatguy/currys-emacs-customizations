@@ -271,7 +271,7 @@
       (return browser-path))))
 
 ;;;; edit-server for chromium browsers
-(when (and (daemonp) (locate-library "edit-server"))
+(when (locate-library "edit-server")
   (require 'edit-server)
   (edit-server-start))
 
