@@ -62,6 +62,7 @@
   (menu-bar-mode 1)
   (setenv "LANG" "en_US.UTF-8")
   (setq dired-use-ls-dired nil)
+  (setq exec-path (append exec-path '("/usr/local/bin")))
   (setenv "PATH" "/Users/mjcurry/bin:/opt/local/libexec/gnubin:/usr/local/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin"))
 
 ;;;; make unlimited (was cutting off function names, which breaks things
@@ -209,6 +210,14 @@
 (global-set-key [S-f8] 'compile-asking-directory)
 (global-set-key [C-S-f8] 'compile)
 (setq compilation-scroll-output t)
+
+;;;; allow color in compilation buffer
+(require 'ansi-color)
+(defun colorize-compilation-buffer ()
+  (toggle-read-only)
+  (ansi-color-apply-on-region (point-min) (point-max))
+  (toggle-read-only))
+(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
 
 ;;;; Make C-h C-s go to apropos (basically apropos-symbol)
 (global-set-key [(control h) (control s)] 'apropos)
