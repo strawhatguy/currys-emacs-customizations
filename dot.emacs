@@ -46,6 +46,7 @@
                       nodejs-repl
                       coffee-mode
                       elnode
+		      julia-mode
                       ))
 
 (dolist (p my-packages)
