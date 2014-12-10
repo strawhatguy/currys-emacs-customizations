@@ -244,6 +244,7 @@
 (global-set-key [(meta !)] 'async-shell-command)
 (global-set-key [(control meta !)] 'shell-command)
 ;;;; dired mode added it's own key, ensure it is gone.
+(require 'dired)
 (define-key dired-mode-map [(meta !)] nil)
 
 ;;;; Buffer menu mode sort function
