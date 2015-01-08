@@ -90,7 +90,6 @@
 (global-set-key (kbd "s-=") 'er/expand-region)
 (global-set-key (kbd "s--") 'er/contract-region)
 
-
 ;;;; magit-status binding
 (require 'magit)
 (global-set-key (kbd "C-c g") 'magit-status)
@@ -306,9 +305,20 @@
 (define-key ruby-mode-map (kbd "C-c s") 'shoulda-run-should-at-point)
 
 ;;;; js2 indent 2 spaces
+(add-to-list 'auto-mode-alist '("\\.js\\'"   . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.json\\'" . js2-mode))
 (set-default 'js2-basic-offset 2)
 (set-default 'js2-mirror-mode  nil)
 (set-default 'js2-mode-escape-quotes  nil)
+(define-key js2-mode-map (kbd "C-M-p") 
+  (lambda () 
+    (interactive) 
+    (js2-beginning-of-defun)))
+(define-key js2-mode-map (kbd "C-M-n") 
+  (lambda () 
+    (interactive) 
+    (js2-end-of-defun)))
+(define-key js2-mode-map (kbd "C-c m") 'js2-mark-defun)
 
 ;;;; Enable paredit-mode for all lisps, disable paredit's C-j
 (require 'paredit)
