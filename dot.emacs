@@ -24,6 +24,7 @@
                       nrepl
                       haskell-mode
                       ruby-compilation
+		      shoulda
                       markdown-mode
                       yaml-mode
                       tuareg
@@ -300,6 +301,10 @@
 ;;;; Twittering mode
 (setq twittering-use-master-password t)
 
+;;;; shoulda
+(require 'shoulda)
+(define-key ruby-mode-map (kbd "C-c s") 'shoulda-run-should-at-point)
+
 ;;;; js2 indent 2 spaces
 (set-default 'js2-basic-offset 2)
 (set-default 'js2-mirror-mode  nil)
@@ -324,9 +329,13 @@
   "Begin each IELM prompt with a ParEdit parenthesis pair."
   (paredit-open-round))
 
-;;;; scheme program, use guile
-(require 'cmuscheme)
-(setq scheme-program-name "guile")
+;;;; scheme program, use chicken
+(setq scheme-program-name "csi")
+
+;;;; chicken-scheme setup
+(require 'chicken-scheme)
+(add-hook 'scheme-mode-hook 'setup-chicken-scheme)
+(define-key scheme-mode-map (kbd "C-?") 'chicken-show-help)
 
 ;;;; Load and setup slime
 (let ((slime-helper (expand-file-name "~/quicklisp/slime-helper.el")))
