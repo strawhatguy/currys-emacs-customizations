@@ -60,6 +60,7 @@
 (load-theme 'zenburn t)
 
 ;;;; Darwin fixes
+(require 'dired)
 (when (eq system-type 'darwin)
   (setq ns-function-modifier 'hyper)
   (menu-bar-mode 1)
@@ -69,6 +70,7 @@
   (setenv "PATH" "/Users/mjcurry/bin:/opt/local/libexec/gnubin:/usr/local/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin"))
 
 ;;;; make unlimited (was cutting off function names, which breaks things
+(require 'imenu)
 (setq imenu-max-item-length t)
 
 ;;;; Shut off auto fill mode
