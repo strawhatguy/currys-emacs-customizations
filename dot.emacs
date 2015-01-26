@@ -48,6 +48,7 @@
                       coffee-mode
                       elnode
 		      julia-mode
+		      flycheck
                       ))
 
 (dolist (p my-packages)
@@ -73,6 +74,10 @@
 ;;;; Shut off auto fill mode
 (remove-hook 'text-mode-hook 'turn-on-auto-fill)
 
+;;;; Enable flycheck everywhere
+(require 'flycheck)
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
 ;;;; ace-jump
 (require 'ace-jump-mode)
 (global-set-key (kbd "C-c SPC") 'ace-jump-mode)
@@ -89,6 +94,13 @@
 (require 'expand-region)
 (global-set-key (kbd "s-=") 'er/expand-region)
 (global-set-key (kbd "s--") 'er/contract-region)
+
+
+;;;; ido & smex
+(require 'smex)
+(ido-mode 1)
+(smex-initialize)
+(global-set-key (kbd "M-x") 'smex)
 
 ;;;; magit-status binding
 (require 'magit)
@@ -340,7 +352,7 @@
   (paredit-open-round))
 
 ;;;; scheme program, use chicken
-(setq scheme-program-name "csi")
+(setq scheme-program-name "csi -:c")
 
 ;;;; chicken-scheme setup
 (require 'chicken-scheme)
